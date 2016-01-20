@@ -1,0 +1,16 @@
+/* the humans responsible & colophon */
+/* humanstxt.org */
+
+/* TEAM */
+  Developer: Kord Campbell
+  Site: http://geekceo.com/
+  Twitter: @kordless
+  Location: San Francisco, CA
+
+/* THANKS */
+  Who: Buddhism.
+
+/* SITE */
+  Standards: Standards suck.
+  Components: AppEngine, Python, GAEB
+  Software: Rocks

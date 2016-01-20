@@ -1,0 +1,85 @@
+html, body {
+  padding-top: 25px;
+}
+.page-header {
+  margin-top: 0px;
+}
+/* blog pages */
+.avatar {
+	padding-right: 0px;
+	margin-right: 0px;
+}
+.article-owner {
+	padding-top: 2px;
+}
+h1, h2, h3 {
+	margin-top: 24px;
+	margin-bottom: 10px;
+}
+h1.blurb {
+	padding-top: 30px;
+}
+.post > h1 > a {
+	text-decoration: none;
+}
+.post > p, .post > ul {
+	font-size: 16px;
+	line-height: 1.6em;
+}
+.post > pre, .post > code {
+	font-size: 15px;
+	line-height: 1.4em;
+}
+a.btn-comments {
+	text-decoration: none;
+	color: white;
+	margin-bottom: 60px;
+}
+.inverse {
+	background-color: #252525;
+	color: #fff;
+	padding-left: 20px;
+	padding-bottom: 30px;
+	margin-bottom: 20px;
+}
+.logo {
+  margin-right: 30px;
+}
+.logo img {
+  margin-top: 30px;
+  width: 100px;
+  height: 100px;
+}
+/* create forms */
+.help-inline {
+	color: #d00;
+	margin-top: 3px;
+}
+.form-control {
+	border-radius: 4px !important;
+}
+.form-padding {
+	margin-bottom: 10px;
+}
+
+/* manage page */
+.breadcrumb {
+	font-size: 16px;
+}
+.icon-guide {
+	background-position: -48px -48px;
+}
+.icon-post {
+	background-position: 0 -72px;
+}
+
+.icon-video {
+	background-position: -192px 0;
+}
+.table {
+	font-size: 16px;
+}
+.author-banner {
+	padding-top: 32px;
+	font-size: 18px;
+}

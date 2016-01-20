@@ -1,0 +1,220 @@
+{% import "macros.html" as macros %}
+{% extends base_layout %}
+
+{% block title %}Admin Flavors :: {% endblock %}
+
+{% block page_styles %}
+  <link href="/css/configure.css" rel="stylesheet">
+{% endblock %}
+
+{% block navbar %}
+  {% include 'navbar.html' %}
+{% endblock %}
+
+{% block content %}
+<!-- hidden delete modal -->
+<div id="delete" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Confirm Deletion</h4>
+      </div>
+      <div class="modal-body">
+        <p>Deleting this flavor will remove it from the database and remove it from the site.  Are you sure that's what you want to do?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" id="delete-button" class="btn btn-danger">Delete Flavor</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end modal -->
+
+<!-- hidden new flavor modal -->
+<div id="new-flavor-modal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Create a New Flavor</h4>
+      </div>
+      <form id="form_new_flavor" action="{{ url|safe }}" method="post" class="form-horizontal">
+        <div class="modal-body">
+          <p>Fill out the following form to create a new flavor.</p>
+          <div class="row">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+            {{ macros.input(form, "name", "Name", "col-xs-9", placeholder="m512.v1.d20.n1", class="form-control required") }}
+            {{ macros.input(form, "memory", "Memory (MB)", "col-xs-6", placeholder="512", class="form-control required") }} 
+            {{ macros.input(form, "vpus", "VPUs", "col-xs-6", placeholder="1", class="form-control required") }}
+            {{ macros.input(form, "disk", "Disk (GB)", "col-xs-6", placeholder="20", class="form-control required") }}
+            {{ macros.input(form, "network_down", "Network Down (Mbits/sec)", "col-xs-6", placeholder="-1 for unlimited", class="form-control required") }}
+            {{ macros.input(form, "network_up", "Network Up (Mbits/sec)", "col-xs-6", placeholder="-1 for unlimited", class="form-control required") }}
+            {{ macros.input(form, "rate", "Starting Rate in μBTC/Hour", "col-xs-6", placeholder="10", class="form-control required") }}
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="new-flavor-modal-close-button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" id="new-flavor-modal-create-button" class="btn btn-danger">Create New Flavor</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- end modal -->
+
+<div class="container content">
+  <div class="row">
+    <div class="col-md-2">
+    {{ macros.admin_side_menu("flavors") }}
+    </div>
+    <div class="col-md-9">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="section-header">
+            <h2><small>Admin Flavors</small></h2>
+            {% if flavors %}
+            <div class="row">
+              <div class="col-md-12">
+                <p>The following flavors are configured for the system to sell. You may click on the <strong>New Flavor</strong> button below to create a new flavor.</p>
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Memory</th>
+                      <th>VPUs</th>
+                      <th>Disk</th>
+                      <th class="text-center">Egress</th>
+                      <th class="text-center">Ingress</th>
+                      <th>Rate</th>
+                      <th>Serving</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for flavor in flavors %}
+                    <tr>
+                      <td>{{ flavor.name }}</td>
+                      <td>{{ flavor.memory }}MB</td>
+                      <td>{{ flavor.vpus }} Core{% if flavor.vpus > 1 %}s{% endif %}</td>
+                      <td>{{ flavor.disk }}GB</td>
+                      <td class="text-center">{% if flavor.network_down < 1 %}<span class="glyphicon glyphicon-ban-circle"></span>{% else %}{{ flavor.network_down }} Mb/sec{% endif %}</td>
+                      <td class="text-center">{% if flavor.network_up < 1 %}<span class="glyphicon glyphicon-ban-circle"></span>{% else %}{{ flavor.network_up }} Mb/sec{% endif %}</td>
+                      <td>{{ flavor.rate }} μBTC/Hour</td>
+                      <td>
+                        <div class="toggle-modern">
+                          <div id="flavor-{{ flavor.key.id() }}" class="toggle{% if flavor.active %} enabled{% endif %}"></div>
+                        </div>
+                      </td>
+                      <td>
+                        <button type="button" id="remove-{{flavor.key.id()}}" class="btn btn-danger btn-xs" title="remove" href="#"><span class="glyphicon glyphicon-remove"></span></button>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            {% else %}
+            <p>No flavors configured. Click the <strong>'New Flavor'</strong> button below to create a flavor.</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-5">
+          <button type="button" id="new-flavor-button" class="btn btn-success">New Flavor</button>
+        </div>
+      </div>  
+    </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript" src="/js/jquery.qrcode.js"></script>
+<script type="text/javascript" src="/js/qrcode.js"></script>
+<script type="text/javascript" src="/js/toggles.js"></script>
+<script type="text/javascript" src="/_ah/channel/jsapi"></script>
+<script type="text/javascript">
+  $().ready(function() {
+    // standard stuff
+    var username = "{{username}}";
+    var csrf_token = "{{ csrf_token() }}";
+    var channel_token = "{{ channel_token }}";
+    var refresh_channel = "{{ refresh_channel }}";
+    
+    // show new flavor modal
+    $('#new-flavor-button').click( function() {
+      $("#new-flavor-modal").modal();
+    });
+    
+    // enable/disable sliders
+    $('div[id^="flavor-"]').each(function(index){
+      flavor_id = this.id.split("-").pop();
+      $('#flavor-'+flavor_id).toggles({
+        text: {
+          on: 'ON',
+          off:'OFF',
+        },
+        on: $(this).hasClass('enabled')
+      });
+      $('#flavor-'+flavor_id).click(function() {
+        // button state to enabled 
+        enabled = $('#'+this.id).children('.active').length;
+        flavor_id = this.id.split("-").pop();
+        console.log(flavor_id);
+        if (enabled == 1) {
+          var state_out = "enabled";
+        } else {
+          var state_out = "disabled";
+        }
+        $.ajax({
+          url: '/admin/flavors/'+flavor_id+'/?channel_token='+channel_token,
+          type: 'PUT',
+          data: {_csrf_token: csrf_token, enable: enabled},
+          success: function() {
+            alertify.log("Flavor has been " + state_out +"!", "success");
+          }
+        });
+      });
+    });
+
+    // remove buttons
+    $('button[id^="remove-"]').each(function(index){
+      $('#'+this.id).click(function() {
+        flavor_id = this.id.split("-").pop();
+        button_id = '#'+this.id;
+        $('#delete').modal();
+        $('#delete-button').click(function() {
+          $.ajax({
+            url: '/admin/flavors/'+flavor_id+'/?_csrf_token='+csrf_token+'&channel_token='+channel_token,
+            type: 'DELETE',
+          });
+          $('#delete').modal("hide");
+        });
+      })
+    });
+    
+    // show new flavor modal on any errors
+    {% if messages|safe %}
+      {% for message in messages %}
+        {% if message[1] == 'error' %}
+          $("#new-flavor-modal").modal();
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+
+    // listen to our refresh channel for page reload
+    onMessage = function() {
+      window.location.reload();
+    };
+    channel = new goog.appengine.Channel(refresh_channel);
+    socket = channel.open();
+    socket.onmessage = onMessage;
+  });
+</script>
+
+{% endblock %}

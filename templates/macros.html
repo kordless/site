@@ -1,0 +1,123 @@
+<!-- creates a form input field -->
+{% macro input(form, name, label, size, type='text') -%}
+  <div class="{{size|safe}} {% if getattr(form,name).errors %} has-error{% endif %} form-padding" id="{{name}}-field">
+    <label class="control-label" for="{{ name }}">{{ label|safe }}</label>
+    {{ getattr(form,name)(type=type, **kwargs)|safe }}
+  </div>
+{%- endmacro %}
+
+<!-- side menu widget -->
+{% macro side_menu(page, user_id, provider) -%}
+  <ul class="nav nav-pills nav-stacked">
+    {% if user_id %}
+    <li{% if page=="status" %} class="active"{% endif %}><a href="{{ uri_for('account-status') }}">Status</a></li>
+    {% endif %}
+    {% if has_clouds %}
+    <li{% if page=="clouds" %} class="active"{% endif %}><a href="{{ uri_for('account-clouds') }}">Clouds</a></li>
+    {% endif %}
+    {% if user_id %}
+    <li{% if page=="projects" %} class="active"{% endif %}><a href="{{ uri_for('account-projects') }}">Projects</a></li>
+    <li{% if page=="wisps" %} class="active"{% endif %}><a href="{{ uri_for('account-wisps') }}">Wisps</a></li>
+    {% if provider %}
+    <li{% if page=="appliances" %} class="active"{% endif %}><a href="{{ uri_for('account-appliances') }}">Appliances</a></li>
+    <li{% if page=="groups" %} class="active"{% endif %}><a href="{{ uri_for('account-groups') }}">Hybrid Groups</a></li>
+    {% endif %}
+    <li{% if page=="settings" %} class="active"{% endif %}><a href="{{ uri_for('account-settings') }}">Settings</a></li>
+    {% endif %}
+  </ul>
+{%- endmacro %}
+
+<!-- admin side menu widget -->
+{% macro admin_side_menu(page) -%}
+  <ul class="nav nav-pills nav-stacked">
+    <li{% if page=="status" %} class="active"{% endif %}><a href="{{ uri_for('admin') }}">Status</a></li>
+    <li{% if page=="blog" %} class="active"{% endif %}><a href="{{ uri_for('blog-article-list') }}">Blog</a></li>
+    <li{% if page=="users" %} class="active"{% endif %}><a href="{{ uri_for('admin-users') }}">Users</a></li>
+    <li{% if page=="groups" %} class="active"{% endif %}><a href="{{ uri_for('admin-groups') }}">Groups</a></li>
+    <li{% if page=="flavors" %} class="active"{% endif %}><a href="{{ uri_for('admin-flavors') }}">Flavors</a></li>
+    <li{% if page=="images" %} class="active"{% endif %}><a href="{{ uri_for('admin-images') }}">Images</a></li>
+  </ul>
+{%- endmacro %}
+
+<!-- instance states side menu widget -->
+{% macro instance_state(state) %}
+  {% if state==0 %}
+    <span id="state" class="label label-danger btn-lg instance-state">Inactive</span>
+  {% endif %}
+  {% if state==1 %}
+    <span id="state" class="label label-warning btn-lg instance-state">Waiting on Payment</span>
+  {% endif %}
+  {% if state==2 %}
+    <span id="state" class="label label-info btn-lg instance-state">Payment Received</span>
+  {% endif %}
+  {% if state==3 %}
+    <span id="state" class="label label-success btn-lg instance-state">Starting</span>
+  {% endif %}
+  {% if state==4 %}
+    <span id="state" class="label label-success btn-lg instance-state">Running</span>
+  {% endif %}
+  {% if state==5 %}
+    <span id="state" class="label label-warning btn-lg instance-state">Suspended</span>
+  {% endif %}
+  {% if state==6 %}
+    <span id="state" class="label label-info btn-lg instance-state">Unsupended</span>
+  {% endif %}
+  {% if state==7 %}
+    <span id="state" class="label label-danger btn-lg instance-state">Decommissioned</span>
+  {% endif %}
+  {% if state==10 %}
+    <span id="state" class="label label-info btn-lg instance-state">Reserved</span>
+  {% endif %}
+{% endmacro %}
+
+<!-- twitter widget -->
+{% macro tweet_widget(data_url, data_text) -%}
+  <a href="https://twitter.com/share" 
+    data-url="{{data_url}}" 
+    class="twitter-share-button" 
+    data-text="{{data_text}}" 
+    data-via="{{ twitter_handle }}" 
+    data-size="medium">
+    Tweet
+  </a>
+
+  <script type="text/javascript">
+    !function(d,s,id){
+      var js,
+      fjs=d.getElementsByTagName(s)[0];
+      if(!d.getElementById(id)){
+        js=d.createElement(s);
+        js.id=id;
+        js.src="//platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js,fjs);
+      }
+    }(document,"script","twitter-wjs");
+  </script>
+{%- endmacro %}
+
+<!-- twitter timeline -->
+{% macro tweet_timeline(twitter_handle, twitter_widget_id) -%}
+  <a class="twitter-timeline" href="https://twitter.com/{{twitter_handle}}" data-widget-id="{{twitter_widget_id}}">Tweets by @{{twitter_handle}}</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+{%- endmacro %}
+
+<!-- google plus widget -->
+{% macro g_plus_widget(data_url) -%}
+  <div class="g-plusone" 
+    data-href="{{ data_url }}" 
+    data-size="medium" 
+    data-annotation="none">
+  </div>
+  <script type="text/javascript">
+    (function() {
+      var po = document.createElement('script'); 
+      po.type = 'text/javascript'; 
+      po.async = true; 
+      po.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; 
+      s.parentNode.insertBefore(po, s);
+    })();
+  </script>
+{%- endmacro %}
+
+

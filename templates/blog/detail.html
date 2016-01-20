@@ -1,0 +1,70 @@
+{% import "macros.html" as macros %}
+{% extends base_layout %}
+
+{% block title %}
+  {{ article_title }}
+{% endblock %}
+
+{% block page_styles %}
+  <link href="/css/blog.css" rel="stylesheet">
+{% endblock %}
+
+{% block rssfeed %}
+  <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://feeds.feedburner.com/{{ app_feedburner_slug }}/" />
+  <link rel="alternate" type="text/xml" title="RSS .92" href="http://feeds.feedburner.com/{{ app_feedburner_slug }}/" />
+  <link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="http://feeds.feedburner.com/{{ app_feedburner_slug }}/" />
+{% endblock %}
+
+{% block navbar %}
+  {% include 'navbar.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="inverse">
+  <div class="container">
+      <div class="row author-banner">
+        <div class="col-md-1">
+          <img height=120% width=120% src="{{ article_gravatar_url }}" class="img-rounded avatar" alt="Author Image">
+        </div>
+        <div class="col-md-3 col-sm-3">
+          <span>{{ article_created }}</span>
+          <div class="article-owner">
+            by <strong>{{ article_owner }}</strong>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-9">
+      <div class="post">
+        {{ article_html|safe }}
+      </div>
+      <ul class="pager">
+        <li class="previous"><a href="#">&larr; Older</a></li>
+        <li class="next"><a href="#">Newer &rarr;</a></li>
+      </ul>
+      <a name="comments"></a>
+      <div id="disqus_thread"></div>
+    </div>
+    <div class="col-md-3">
+      {{ macros.tweet_timeline(twitter_handle, twitter_widget_id) }}
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript" language="JavaScript">
+  $(window).load(function(){
+    var disqus_shortname = '{{disqus_shortname}}';
+    var disqus_developer = 1;
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  });
+</script>
+{% endblock %}

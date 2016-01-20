@@ -1,0 +1,78 @@
+/* HOME STYLES
+-------------------------------------------------- */
+
+html, body {
+  color: #5a5a5a;
+  padding-top: 25px;
+}
+
+#prop {
+  text-transform: uppercase;
+}
+.inversetop{
+  background-color: #252525;
+  color: #fff;
+  padding-top: 100px;
+  padding-bottom: 30px;
+  margin-bottom: 20px;
+  min-height: 500px;
+}
+.inversetop h1 {
+  font-size: 34px;
+}
+
+.inversetop .blurb {
+  font-size: 16px;
+}
+
+.blurb {
+  margin-bottom: 20px;
+}
+
+.blurb a {
+  color: #fff;
+}
+
+#heroimage {
+  width: 570px;
+  height: 333px;
+  margin-top: 20px;
+  background-repeat: no-repeat;
+  background-image: url("/img/site/hero.png");
+}
+
+@media (min-width: 768px) {
+  #heroimage {
+    display: none;
+  }
+}
+@media (min-width: 992px) {
+  #heroimage {
+    display: inherit;
+  }
+}
+@media (min-width: 1200px) {
+  #heroimage {
+    margin-top: 0px;
+    display: inherit;
+  }
+}
+
+<a class="twitter-timeline" href="https://twitter.com/stackape" data-widget-id="445274451664322560">Tweets by @stackape</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+
+/* marketing drivel */
+.marketing {
+  margin-top: 0px;
+}
+.marketing > .drivel {
+  padding-top: 30px;
+  min-height: 200px;
+}
+.big-quote > p {
+  font-size: 24px;
+}
+blockquote.big-quote {
+  margin-bottom: 60px;
+}

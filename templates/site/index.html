@@ -1,0 +1,101 @@
+{% import "macros.html" as macros %}
+{% extends base_layout %}
+
+{% block page_styles %}
+    <!-- Home Page -->
+    <link href="/css/index.css" rel="stylesheet">
+    <link href="/css/font-awesome.css" rel="stylesheet">
+{% endblock %}
+
+{% block description %}Launch instances with Bitcoin.{% endblock %}
+
+{% block navbar %}
+  {% include 'navbar.html' %}
+{% endblock %}
+
+{% block content %}
+  <!--top container-->
+  <div class="inversetop">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <h1 class="prop">Support Open Source Projects by Launching Them with Bitcoin</h1>
+          <p class="blurb">When you launch your favorite Open Source software instances on the <strong><a href="http://utter.io/">Utter.io Intercloud</a></strong> with {{ app_name }}, we'll send part of your instance payment to the project to help support the developers who work on the project. It's fast and easy!</p>
+          <button id="browse-projects-button" class="btn btn-info">Browse Projects</button>
+          <button id="add-project-button" class="btn btn-success"></span>Add a Project</button>
+        </div>
+        <div class="col-md-6">
+          <div id="heroimage"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/top container-->
+
+  <!--bottom container-->
+  <div class="container">
+    <!--marketing-->
+    <div class="marketing">  
+      <!--row-->
+      <div class="row drivel">
+        <div class="col-md-4">
+          <h3><span class="glyphicon glyphicon-gift"></span> Supporting Developers</h3>
+          <p>{{ app_name }} gives users and providers a way to say "thank you" to the developers who work on Open Source projects, while making it easy to preview their software. Revenue from launching instances is shared with developers and providers using <a href="https://www.bitcoin.org/">Bitcoin</a>.</p>
+        </div>
+        <div class="col-md-4">
+          <h3><span class="glyphicon glyphicon-qrcode"></span> Pay Using <span id="bitcoin" class="fa fa-bitcoin"></span>itcoin</h3>
+          <p>Deploy instances running Open Source projects in minutes by simply sending Bitcoin to a <a href="https://en.bitcoin.it/wiki/Address">payment address</a>. Soon, multi-factor keys will let both users and project authors to log into the instances, enabling remote system's managment revenue for the project!</p>
+        </div>
+        <div class="col-md-4">
+          <h3><span class="glyphicon glyphicon-map-marker"></span> Global Deployments</h3>
+          <p>{{ app_name }} provides simplified and secure global cloud federation via the <a href="http://en.wikipedia.org/wiki/Intercloud">Intercloud</a>. Users deploy projects based on cost and geo location without the hassle of infrastructure provider tokens. Users can even lauch instances on their own private clouds.</p>
+        </div>
+      </div>
+      <!--/row-->
+      
+      <!--row-->
+      <div class="row drivel">
+        <div class="col-md-4">
+          <h3><span class="glyphicon glyphicon-lock"></span> Login with Google™</h3>
+          <p>The {{ app_name }} site runs on <a href="https://developers.google.com/appengine/docs/whatisgoogleappengine">Google Appengine™</a> and utilizes <a href="https://developers.google.com/appengine/articles/openid">Google's federated login system</a>. The site also supports two factor authentication via <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2">Google Authenticator</a>. Even better, you don't need to login to if you just want to <a href="{{ uri_for('lab-launcher') }}">start instances</a>.</p>
+        </div>
+        <div class="col-md-4">
+          <h3><span class="glyphicon glyphicon-tasks"></span> Runs on OpenStack™</h3>
+          <p>The <a href="http://openstack.org">OpenStack Open Source project</a> provides the cloud controller fabric used by the {{ app_name }} provider's appliance(s). OpenStack can run on anything from a single desktop computer to an entire datacenter and <a href="https://github.com/StackGeek/openstackgeek/tree/master/icehouse">installing it takes about 10 minutes</a>.</p>
+        </div>
+        <div class="col-md-4">
+          <h3><span class="glyphicon glyphicon-heart"></span> 100% Open Source Trust</h3>
+          <p>The <a href="http://utter.io/">Utter.io</a> framework that powers this site is Open Source and free to use by anyone, anywhere, at any time. <strong>Utter.io</strong> appliances <a href="/docs#becoming-a-provider">are run by anyone</a> who wishes to share spare compute with others they trust, or even those they don't, <a href="/docs/#can-i-trust-it">depending on the use case</a>.</p>
+        </div>
+      </div>
+      <!--/row-->
+    </div>
+    <!--/marketing-->
+
+    <hr class="soften">
+    <blockquote class="big-quote">
+      <p>&#8220;It's a Bitcoin powered deployment tool for supporting and trying out Open Source software.&#8221;</p>
+      <small>
+        Kord Campbell, Founder and Developer
+      </small>
+    </blockquote>
+
+  </div>
+  <!--/container-->
+{% endblock %}
+
+<!--what are you looking at?-->
+{% block javascript %}
+  <script type='text/javascript' src='/js/jquery.cookie.js'></script>
+  <script type="text/javascript">
+    $().ready(function() {
+      // buttons
+      $('#add-project-button').on('click', function(e) { 
+        window.location = "{{ uri_for('account-projects-new') }}"; 
+      });
+      $('#browse-projects-button').on('click', function(e) { 
+        window.location = "{{ uri_for('projects') }}"; 
+      });
+    })
+  </script>
+{% endblock %}

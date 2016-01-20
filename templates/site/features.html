@@ -1,0 +1,30 @@
+{% import "macros.html" as macros %}
+{% extends base_layout %}
+
+{% block title %}Features :: {% endblock %}
+
+{% block page_styles %}
+  <link href="/css/pricing.css" rel="stylesheet">
+{% endblock %}
+
+{% block navbar %}
+  {% include 'navbar.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="text-center">
+    <h1>Best Features on the Planet</h1>
+    <p>(This won't be done until the functional bits of the site are complete.)</p>
+  </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+<script type="text/javascript" src="/js/trianglify.js"></script>
+<script type="text/javascript">
+  $().ready(function() {
+  });
+</script>
+{% endblock %}

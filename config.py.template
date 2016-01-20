@@ -1,0 +1,99 @@
+import os
+import logging
+
+from datetime import date
+
+# copyright holders
+copyright_date = date.today().year
+copyright_name = "StackGeek, Inc."
+
+# application info
+app_name = "StackMonkey"
+app_description = "Distributed servers for everyone."
+app_email = "info@stackmonkey.com"
+app_owner = "Kord Campbell"
+app_domain = "stackmonkey.com"
+
+# contact form emails
+contact_sender = "CONTACT_EMAIL"
+contact_recipient = "CONTACT_EMAIL"
+
+# social handles
+twitter_handle = "stackape"
+twitter_widget_id = "TWITTER_WIDGET_ID"
+linkedin_handle = "stackmonkey"
+google_plus_handle = "GOOGLE_PLUS_HANDLE"
+disqus_shortname = "stackmonkey"
+
+# blog URL
+blog_url = "/blog"
+
+# get your own recaptcha keys by registering at www.google.com/recaptcha
+captcha_public_key = "PUBLIC_CAPTCHA"
+captcha_private_key = "PRIVATE_CAPTCHA"
+
+# tracking shizzle
+google_analytics_code = "GA_CODE"
+
+# slack integration
+slack_webhook = ""
+
+# webapp config
+session_age = 3600
+webapp2_config = {}
+webapp2_config['webapp2_extras.sessions'] = {
+    'secret_key': 'SECRET_KEY',
+}
+webapp2_config['webapp2_extras.auth'] = {
+    'user_model': 'web.models.models.User',
+    'cookie_name': 'pool_session',
+    'token_max_age': session_age,
+}
+webapp2_config['webapp2_extras.jinja2'] = {
+    'template_path': 'templates',
+    'environment_args': {'extensions': ['jinja2.ext.i18n'], 'autoescape': True},
+}
+
+# issue a job token to prevent others from running our tasks by knowing URL
+job_token = 'JOB_TOKEN'
+
+# key
+key = "RAND_KEY"
+
+# Password AES Encryption Parameters
+aes_key = "AES_KEY"
+salt = "SALT"
+
+# jinja2 base layout templates
+base_layout = 'base.html'
+
+# locale settings
+app_lang = 'en'
+locales = ['en_US']
+
+# admin urls
+if os.environ['SERVER_SOFTWARE'].startswith('Dev'):
+	admin_interface_url = 'http://localhost:ADMIN_PORT/_ah/admin/datastore'
+    website_url = 'http://localhost:SERVICE_PORT/'
+else:
+	admin_interface_url = 'https://appengine.google.com/dashboard?&app_id=s~zenopsio'
+    website_url = 'https://%s.%s/' % ("www", app_domain)
+
+# html whitelist for bleached articles
+bleach_tags = ['p', 'em', 'strong', 'code', 'h1', 'h2', 'h3', 'h4', 'h5', 'td', 'li', 'ul', 'ol', 'table', 'tbody', 'thead', 'iframe', 'tr', 'th', 'span',  'pre', 'i', 'button', 'img', 'a']
+bleach_attributes = {'i': ['class'], 'a': ['href', 'rel'], 'table': ['class'], 'img': ['src', 'alt'], 'iframe': ['src', 'width', 'height', 'frameborder'], 'pre': ['class']}
+
+# templates for errors
+error_templates = {
+    403: 'errors/default_error.html',
+    404: 'errors/default_error.html',
+    500: 'errors/default_error.html',
+}
+
+# jinja2 base layout templates
+base_layout = 'base.html'
+
+# debug flag
+debug = os.environ['SERVER_SOFTWARE'].startswith('Dev')
+
+enable_federated_login = ENABLE_FEDERATED_LOGIN
